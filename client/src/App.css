@@ -1,24 +1,72 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.App-header {
-  background-color: #222;
+#top-section{
+  background: url("./images/concert1.jpg") no-repeat center; 
+  background-size: cover;
   height: 150px;
-  padding: 20px;
+}
+
+#main-body{
+background: url("./images/concert4.jpg"); 
+background-size: cover;
+background-repeat: no-repeat;
+position:fixed;
+padding:0;
+margin:0;
+top:0;
+left:0;
+width: 100%;
+height: 100%;
+}
+
+#user-input{
+margin-top: 4%;
+}
+
+.main-page-logo{
+position: absolute;
+top: 8px;
+left: 16px;
+}
+
+.main-page-logo p{
+color: white;
+}
+
+#search-div{
+  padding-top: 2%;
+}
+
+#search-div h2{
+color: white;
+}
+
+#search-results{
+  margin-top: 2%;
+}
+
+.result-card{
+  background: #000000; /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #000000, #434343); /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #000000, #434343); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   color: white;
 }
 
-.App-intro {
-  font-size: large;
+.result-card hr{
+  border-color: white;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+#profile {
+  margin-top: 1.5%;
 }
+
+.interest-card{
+  background: #000000; /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #000000, #434343); /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #000000, #434343); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  color: white;
+  margin-bottom:1%;
+}
+
+.interest-card hr{
+  border-color: white;
+}
+
