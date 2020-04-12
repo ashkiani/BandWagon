@@ -17,6 +17,7 @@ function SearchConcert() {
       <div id="search-results" className="container">
         <h2 className="text-center">Look at all of the events...</h2>
         <hr/>
+        {/* This is what the search results should look like when results are returned from the api */}
         <div className="card result-card">
           <div className="card-body">
             <h5 className="card-title">Artist/Band: Drake</h5>

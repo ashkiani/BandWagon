@@ -25,6 +25,7 @@ function Profile() {
               </div>
         </div>
         <div className="col-9" id="divInterests">
+          {/* This is what the results should look like when returned from the database */}
             <div className="card interest-card">
                 <div className="card-body">
                
