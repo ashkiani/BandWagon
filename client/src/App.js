@@ -8,7 +8,9 @@ import Profile from "./components/Profile";
 import SearchConcert from "./components/SearchConcert";
 import "./App.css";
 
+
 function App() {
+
   return (
     <Router>
     <div>
@@ -19,7 +21,7 @@ function App() {
       <Route exact path="/signup">
           <SignUp />
         </Route>
-        <Route exact path="/login">
+        <Route exact path="/login" >
           <Login />
         </Route>
         <Route exact path="/personalinfo">

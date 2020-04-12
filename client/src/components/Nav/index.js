@@ -1,6 +1,8 @@
 import React from "react";
+import { NavLink } from 'react-router-dom';
 
 function Nav() {
+
   return (
 
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -10,12 +12,12 @@ function Nav() {
         </button>
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav">
-            <li className="nav-item ">
-              <a className="nav-link" href="searchconcert">Search Concert </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="profile">My Profile</a> 
-          </li>   
+            <NavLink className="nav-item" to="/searchconcert">
+              <a className="nav-link" >Search Concert </a>
+            </NavLink>
+            <NavLink className="nav-item" to="/profile">
+              <a className="nav-link" >My Profile</a> 
+          </NavLink>   
           </ul>
         </div>
       </nav>
