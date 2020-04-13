@@ -12,26 +12,18 @@ function App() {
 
   return (
     <Router>
-    <div>
-      <Nav />
-      <Switch>
-        {/* Redirect launches the signup page when the app starts */}
-      <Redirect exact from="/" to="/signup" />
-      <Route exact path="/signup">
-          <SignUp />
-        </Route>
-        <Route exact path="/login" >
-          <Login />
-        </Route>
-        <Route exact path="/searchconcert">
-          <SearchConcert />
-        </Route>
-        <Route exact path="/profile">
-          <Profile />
-        </Route>
-      </Switch>
-    </div>
-  </Router>
+      <div>
+        <Nav />
+        <Switch>
+          {/* Redirect launches the signup page when the app starts */}
+          <Redirect exact from="/" to="/login" />
+          <Route exact path="/signup" component={SignUp} /> 
+          <Route exact path="/login" component={Login} /> 
+          <Route exact path="/searchconcert" component={SearchConcert} />  
+          <Route exact path="/profile" component={Profile} />            
+        </Switch>
+      </div>
+    </Router>
   );
 }
 
