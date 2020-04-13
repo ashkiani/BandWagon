@@ -1,13 +1,21 @@
+require("dotenv").config();
 const express = require("express");
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 const path = require("path");
+const jwt = require("jsonwebtoken");
 const Database = require("mysql-sync-query");
 const db = new Database("bandwagon_db");
+const withAuth = require("./middleware");
+const bcrypt = require("bcrypt");
 const PORT = process.env.PORT || 3001;
 const app = express();
 
 // Define middleware here
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(cookieParser());
+
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
@@ -15,10 +23,76 @@ if (process.env.NODE_ENV === "production") {
 
 // Define API routes here
 
-// Send every other request to the React app
-// Define any API routes before this runs
-app.get("*", (req, res) => {
+app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "./client/build/index.html"));
+});
+
+app.get("/api/home", function (req, res) {
+  res.send("Welcome!");
+});
+
+app.get("/api/secret", withAuth, function (req, res) {
+  res.send("The password is potato");
+});
+
+app.post("/api/register", async function (req, res) {
+  const { email, password } = req.body;
+  const hashedPassword = await bcrypt.hash(password, 10);
+  let userExists =
+    (await db.executeQuery(`SELECT * FROM tbl_users WHERE email='${email}'`)
+      .length) > 0;
+  if (userExists) {
+    res.status(400).send("The provided Email is already assigned to a user.");
+  } else {
+    let newUser = await db.executeQuery(
+      `INSERT INTO tbl_users SET email= '${email}' , password= '${hashedPassword}' , first_name='a' , last_name='b'`
+    );
+    if (newUser.affectedRows > 0) {
+      res.status(200).send("Welcome to the club!");
+    } else {
+      res.status(500).send("Error registering new user please try again.");
+    }
+  }
+});
+
+app.post("/api/authenticate", async function (req, res) {
+  const { email, password } = req.body;
+  try {
+    let result = await db.executeQuery(
+      `SELECT * FROM tbl_users WHERE email='${email}'`
+    );
+    if (result.length === 1) {
+      console.log("email found.");
+      if (await bcrypt.compare(password, result[0].password)) {
+        console.log("password matched.");
+        // Issue token
+        const payload = { email };
+        const token = jwt.sign(payload, process.env.AUTH_SECRET, {
+          expiresIn: "1h",
+        });
+        res.cookie("token", token, { httpOnly: true }).sendStatus(200);
+      } else {
+        console.log("password didn't match.");
+        res.status(401).json({
+          error: "Incorrect email or password",
+        });
+      }
+    } else {
+      console.log("email not found.");
+      res.status(401).json({
+        error: "Incorrect email or password",
+      });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      error: "Internal error please try again",
+    });
+  }
+});
+
+app.get("/checkToken", withAuth, function (req, res) {
+  res.sendStatus(200);
 });
 
 try {
