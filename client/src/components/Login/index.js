@@ -5,7 +5,7 @@ function Login() {
 
     // Use this function for the login button
  function loginUser() {
-  window.location.assign('/personalinfo');
+  window.location.assign('/searchconcert');
 }
 
   return (
