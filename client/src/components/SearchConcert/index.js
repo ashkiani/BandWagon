@@ -9,6 +9,7 @@ function SearchConcert() {
           <div className="input-group mb-3">
             <input type="text" className="form-control" placeholder="Artist/Band Name" />
             <div className="input-group-append">
+              {/* Button used to search concerts by artist */}
               <button className="btn btn-success" type="button" id="btnArtistSearch">Search</button>
             </div>
           </div>

@@ -33,8 +33,8 @@ function Login() {
                     <input type="password" className="form-control" id="password"/>
                   </div>
              
-                 
-                  <button id="btnSignUp" className="btn btn-dark" onClick={loginUser}>Login</button>
+                 {/* Button used to log user in */}
+                  <button id="btnLogin" className="btn btn-dark" onClick={loginUser}>Login</button>
                     
                 </div>
               </div>

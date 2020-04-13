@@ -67,6 +67,7 @@ function SignUp() {
                 </div>
                   </div>
                 </div>
+                {/* Button used to sign up a new user */}
                 <button id="btnSignUp" className="btn btn-dark" onClick={signUpNewUser}>Sign Up</button>
               </div>
             </div>
