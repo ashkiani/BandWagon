@@ -4,7 +4,7 @@ import image from "./assets/concert3.jpg";
 function SignUp() {
 
   // Use this function for the signup button
- function signUpNewUser() {
+  function signUpNewUser() {
     window.location.assign('/login');
   }
 
@@ -25,13 +25,47 @@ function SignUp() {
               <div className="card-body">
                 <h3 className="card-title">Join the bandWAG<i className="far fa-grin-tongue-squint"></i>N</h3>
                 <hr />
-                <div className="form-group">
-                  <label >Username:</label>
-                  <input type="text" className="form-control" id="username" />
+                <div className="row">
+                  <div className="col">
+                    <div className="form-group">
+                      <label >Username:</label>
+                      <input type="text" className="form-control" id="username" />
+                    </div>
+                  </div>
+                  <div className="col">
+                    <div className="form-group">
+                      <label >Password:</label>
+                      <input type="password" className="form-control" id="password" />
+                    </div>
+                  </div>
                 </div>
-                <div className="form-group">
-                  <label >Password:</label>
-                  <input type="password" className="form-control" id="password" />
+                <div className="row">
+                  <div className="col">
+                  <div className="form-group">
+                  <label >Full Name:</label>
+                  <input type="text" className="form-control" id="userFullName" />
+                </div>
+                  </div>
+                  <div className="col">
+                  <div className="form-group">
+                  <label >Age:</label>
+                  <input type="number" className="form-control" id="userAge" />
+                </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col">
+                  <div className="form-group">
+                  <label>City Of Interest</label>
+                  <input type="text" className="form-control" id="userCityOfInterest" />
+                </div>
+                  </div>
+                  <div className="col">
+                  <div className="form-group">
+                  <label >Favorite Artist/Band</label>
+                  <input type="text" className="form-control" id="userFavBand" />
+                </div>
+                  </div>
                 </div>
                 <button id="btnSignUp" className="btn btn-dark" onClick={signUpNewUser}>Sign Up</button>
               </div>

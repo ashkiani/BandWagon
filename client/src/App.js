@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-d
 import Nav from "./components/Nav";
 import SignUp from "./components/SignUp";
 import Login from "./components/Login";
-import PersonalInfo from "./components/PersonalInfo";
 import Profile from "./components/Profile";
 import SearchConcert from "./components/SearchConcert";
 import "./App.css";
@@ -24,9 +23,6 @@ function App() {
         <Route exact path="/login" >
           <Login />
         </Route>
-        <Route exact path="/personalinfo">
-          <PersonalInfo />
-        </Route>
         <Route exact path="/searchconcert">
           <SearchConcert />
         </Route>
@@ -38,6 +34,5 @@ function App() {
   </Router>
   );
 }
-
 
 export default App;
