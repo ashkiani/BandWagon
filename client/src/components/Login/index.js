@@ -16,8 +16,25 @@ export default class Login extends Component {
   }
   onSubmit = (event) => {
     event.preventDefault();
-    alert("Authentication coming soon!");
-     window.location.assign("/searchconcert");
+    fetch("/api/authenticate", {
+      method: "POST",
+      body: JSON.stringify(this.state),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(res => {
+        if (res.status === 200) {
+          this.props.history.push("/");
+          window.location.assign("/searchconcert");
+        } else {
+          const error = new Error(res.error);
+          throw error;
+        }
+      })
+      .catch(err => {
+        alert("Error logging in please try again");
+      });
   }
   render() {
     return (
@@ -34,7 +51,6 @@ export default class Login extends Component {
               </div>
               <div className="col-md-8">
                 <form onSubmit={this.onSubmit}>
-
                   <div className="card-body">
                     <h3 className="card-title">Login</h3>
                     <hr />
@@ -54,7 +70,7 @@ export default class Login extends Component {
                   </div>
                 </form>
                 <hr />
-                <button id="btnLogin" className="btn btn-dark ml-3" onClick={()=>window.location.assign('/signup')}>Sign up</button>
+                <button id="btnLogin" className="btn btn-dark ml-3" onClick={() => window.location.assign('/signup')}>Sign up</button>
               </div>
             </div>
           </div>
