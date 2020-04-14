@@ -1,81 +1,99 @@
-import React from "react";
 import image from "./assets/concert3.jpg";
-
-function SignUp() {
-
-  // Use this function for the signup button
-  function signUpNewUser() {
-    window.location.assign('/login');
+import React, { Component } from 'react';
+export default class Login extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      email: "",
+      password: "",
+      firstName: "",
+      lastName: ""
+    };
   }
-
-  return (
-    <div id="main-body">
-      <div id="user-input" className="container">
-        <div className="card mb-3" >
-          <div className="row no-gutters">
-            <div className="col-md-4" >
-              <div className="main-page-logo">
-                <h2 className="text-success">Welcome to the bandWAG<i className="far fa-grin-tongue-squint"></i>N</h2>
-                <p>Discover millions of events, get alerts about your favorite artists, bands and more — plus always- secure, effortless ticketing.</p>
+  handleInputChange = (event) => {
+    const { value, name } = event.target;
+    this.setState({
+      [name]: value
+    });
+  }
+  onSubmit = (event) => {
+    event.preventDefault();
+    fetch("/api/register", {
+      method: "POST",
+      body: JSON.stringify(this.state),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(res => {
+        if (res.status === 200) {
+          this.props.history.push("/searchconcert");
+        } else {
+          const error = new Error(res.error);
+          throw error;
+        }
+      })
+      .catch(err => {
+        alert("Error logging in please try again");
+      });
+  }
+  render() {
+    return (
+      <div id="main-body">
+        <div id="user-input" className="container">
+          <div className="card mb-3" >
+            <div className="row no-gutters">
+              <div className="col-md-4" >
+                <div className="main-page-logo">
+                  <h2 className="text-success">Welcome to the bandWAG<i className="far fa-grin-tongue-squint"></i>N</h2>
+                  <p>Discover millions of events, get alerts about your favorite artists, bands and more — plus always- secure, effortless ticketing.</p>
+                </div>
+                <img src={image} className="card-img" alt="bandwagon" />
               </div>
-              <img src={image} className="card-img" alt="bandwagon" />
-            </div>
 
-            <div className="col-md-8">
-              <div className="card-body">
-                <h3 className="card-title">Join the bandWAG<i className="far fa-grin-tongue-squint"></i>N</h3>
-                <hr />
-                <div className="row">
-                  <div className="col">
-                    <div className="form-group">
-                      <label >Username:</label>
-                      <input type="text" className="form-control" id="username" />
+              <div className="col-md-8">
+                <form onSubmit={this.onSubmit}>
+                  <div className="card-body">
+                    <h3 className="card-title">Join the bandWAG<i className="far fa-grin-tongue-squint"></i>N</h3>
+                    <hr />
+                    <div className="row">
+                      <div className="col">
+                        <div className="form-group">
+                          <label >Email:</label>
+                          <input type="email" name="email" placeholder="Enter email" value={this.state.email} onChange={this.handleInputChange} required className="form-control" />
+                        </div>
+                      </div>
+                      <div className="col">
+                        <div className="form-group">
+                          <label >Password:</label>
+                          <input type="password" name="password" placeholder="Enter password" value={this.state.password} onChange={this.handleInputChange} required className="form-control" />
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                  <div className="col">
-                    <div className="form-group">
-                      <label >Password:</label>
-                      <input type="password" className="form-control" id="password" />
+                    <div className="row">
+                      <div className="col">
+                        <div className="form-group">
+                          <label >First Name:</label>
+                          <input type="text" name="firstName" placeholder="Enter First Name" value={this.state.firstName} onChange={this.handleInputChange} required className="form-control" />
+                        </div>
+                      </div>
+                      <div className="col">
+                        <div className="form-group">
+                          <label >Last Name:</label>
+                          <input type="text" name="lastName" placeholder="Enter Last Name" value={this.state.lastName} onChange={this.handleInputChange} required className="form-control" />
+                        </div>
+                      </div>
                     </div>
+                    {/* Button used to sign up a new user */}
+                    <input type="submit" value="Sign Up" className="btn btn-dark" />
+                    {/* onClick={signUpNewUser} */}
                   </div>
-                </div>
-                <div className="row">
-                  <div className="col">
-                  <div className="form-group">
-                  <label >Full Name:</label>
-                  <input type="text" className="form-control" id="userFullName" />
-                </div>
-                  </div>
-                  <div className="col">
-                  <div className="form-group">
-                  <label >Age:</label>
-                  <input type="number" className="form-control" id="userAge" />
-                </div>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col">
-                  <div className="form-group">
-                  <label>City Of Interest</label>
-                  <input type="text" className="form-control" id="userCityOfInterest" />
-                </div>
-                  </div>
-                  <div className="col">
-                  <div className="form-group">
-                  <label >Favorite Artist/Band</label>
-                  <input type="text" className="form-control" id="userFavBand" />
-                </div>
-                  </div>
-                </div>
-                {/* Button used to sign up a new user */}
-                <button id="btnSignUp" className="btn btn-dark" onClick={signUpNewUser}>Sign Up</button>
+                </form>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
-
-export default SignUp;
