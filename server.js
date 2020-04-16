@@ -23,10 +23,6 @@ if (process.env.NODE_ENV === "production") {
 
 // Define API routes here
 
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "./client/build/index.html"));
-});
-
 app.get("/api/home", function (req, res) {
   res.send("Welcome!");
 });
@@ -93,6 +89,10 @@ app.post("/api/authenticate", async function (req, res) {
 
 app.get("/checkToken", withAuth, function (req, res) {
   res.sendStatus(200);
+});
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
 
 try {
