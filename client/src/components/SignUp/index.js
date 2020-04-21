@@ -25,16 +25,16 @@ export default class Login extends Component {
         "Content-Type": "application/json"
       }
     })
-      .then(res => {
+      .then(async res => {
         if (res.status === 200) {
           this.props.history.push("/searchconcert");
         } else {
-          const error = new Error(res.error);
-          throw error;
+          res.text().then(text => { alert("Error please try again -" + text) });
         }
       })
       .catch(err => {
-        alert("Error logging in please try again");
+        console.log(err);
+        alert("Error registering in please try again");
       });
   }
   render() {
