@@ -34,11 +34,13 @@ app.get("/api/secret", withAuth, function (req, res) {
 app.post("/api/register", async function (req, res) {
   const { email, password, firstName, lastName } = req.body;
   const hashedPassword = await bcrypt.hash(password, 10);
-  let userExists =
-    (await db.executeQuery(`SELECT * FROM tbl_users WHERE email='${email}'`)
-      .length) > 0;
+  const queryResult = await db.executeQuery(
+    `SELECT * FROM tbl_users WHERE email='${email}'`
+  );
+  let userExists = queryResult.length > 0;
+  console.log("User already exists");
   if (userExists) {
-    res.status(400).send("The provided Email is already assigned to a user.");
+    res.status(400).send("The provided Email already exists.");
   } else {
     let newUser = await db.executeQuery(
       `INSERT INTO tbl_users SET email= '${email}' , password= '${hashedPassword}' , first_name='${firstName}' , last_name='${lastName}'`
