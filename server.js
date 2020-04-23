@@ -123,3 +123,8 @@ try {
   console.log("Failed to connect to DB.");
   console.log(err);
 }
+
+// app.get("/profile", function (req, res){
+const queryResult = db.executeQuery('SELECT * FROM tbl_users');
+console.log(queryResult);
+// });
