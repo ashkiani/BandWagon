@@ -125,6 +125,6 @@ try {
 }
 
 // app.get("/profile", function (req, res){
-const queryResult = db.executeQuery('SELECT * FROM tbl_users');
+const queryResult = db.executeQuery("SELECT * FROM tbl_users");
 console.log(queryResult);
 // });
