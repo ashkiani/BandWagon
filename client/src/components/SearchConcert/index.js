@@ -1,39 +1,58 @@
-import React from "react";
+import React, { Component } from "react";
+import SearchForm from "../SearchForm";
+import SearchResults from "../SearchResults";
+import API from "../../utils/API";
 
-function SearchConcert() {
-  return (
-    <div>
-    <div id="top-section">
-        <div id="search-div" className="container">
-          <h2>Let's find a concert <i className="fas fa-search"></i></h2>
-          <div className="input-group mb-3">
-            <input type="text" className="form-control" placeholder="Artist/Band Name" />
-            <div className="input-group-append">
-              {/* Button used to search concerts by artist */}
-              <button className="btn btn-success" type="button" id="btnArtistSearch">Search</button>
-            </div>
-          </div>
+class SearchConcert extends Component {
+  state = {
+    search: "",
+    results: []
+  };
+
+  // When this component mounts, search the songkick API for concerts/festivals
+  componentDidMount() {
+    this.searchConcert("");
+  }
+
+  searchConcert = query => {
+    API.search(query)
+      .then(res => this.setState({ results: res.data.resultsPage.results.artist }))
+      .catch(err => console.log(err));
+  };
+
+  handleInputChange = event => {
+    const name = event.target.name;
+    const value = event.target.value;
+    this.setState({
+      [name]: value
+    });
+  };
+
+  // When the form is submitted, search the Giphy API for `this.state.search`
+  handleFormSubmit = event => {
+    event.preventDefault();
+    this.searchConcert(this.state.search);
+  };
+
+  render() {
+    return (
+      <div>
+          <SearchForm
+            search={this.state.search}
+            handleFormSubmit={this.handleFormSubmit}
+            handleInputChange={this.handleInputChange}
+          />
+        <div id="search-results" className="container">
+        
+          <h2 className="text-center">Look at all of the events...</h2>
+          <hr />
+          <SearchResults results={this.state.results} />
+          {/* This is what the search results should look like when results are returned from the api */}
         </div>
+
       </div>
-      <div id="search-results" className="container">
-        <h2 className="text-center">Look at all of the events...</h2>
-        <hr/>
-        {/* This is what the search results should look like when results are returned from the api */}
-        <div className="card result-card">
-          <div className="card-body">
-            <h5 className="card-title">Artist/Band: Drake</h5>
-            <hr/>
-            <p className="card-text"><b>Upcoming Event:</b> Rolling Loud presents \"Rolling Loud VIP SKYLOFT\" 2020</p>
-            <p className="card-text"><b>Venue:</b> Hard Rock Stadium</p>
-            <p className="card-text"><b>Location:</b> Miami, FL, US</p>
-            <p className="card-text"><b>Date:</b> 2020-05-15</p>
-            <a href="#" className="btn btn-success">Interested</a>&nbsp;<a href="#" className="btn btn-success">View Details</a>
-          </div>
-        </div>
-      </div>
-     
-  </div>
-  );
+    );
+  }
 }
 
 export default SearchConcert;
