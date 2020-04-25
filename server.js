@@ -93,6 +93,47 @@ app.get("/checkToken", withAuth, function (req, res) {
   res.sendStatus(200);
 });
 
+app.post("/api/interested", async function (req, res) {
+  try {
+    const { email, eventId } = req.body;
+    console.log("email");
+    console.log(email);
+    console.log("event");
+    console.log(eventId);
+    let queryResult = await db.executeQuery(
+      `SELECT id FROM tbl_users WHERE tbl_users.email ='${email}'`
+    );
+    const userExists = queryResult.length > 0;
+    if (userExists) {
+      const userId = queryResult[0].id;
+      const conditions = [`user_id =${userId}`, `event_id=${eventId}`];
+      queryResult = await db.executeQuery(
+        `SELECT * FROM tbl_interests WHERE ${conditions[0]} and ${conditions[1]}`
+      );
+      const recordExists = queryResult.length > 0;
+      if (recordExists) {
+        console.log("interest exists");
+        res.status(400).send("The user is already interested in this event.");
+      } else {
+        console.log("interest not exist");
+        queryResult = await db.executeQuery(
+          `INSERT INTO tbl_interests SET ${conditions[0]} , ${conditions[1]}`
+        );
+        if (queryResult.affectedRows > 0) {
+          res.status(200).send("Interest recorded!");
+        } else {
+          res.status(500).send("Failed to record the interest.");
+        }
+      }
+    } else {
+      res.status(400).send("Invalid User.");
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
+});
+
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
