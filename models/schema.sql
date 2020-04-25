@@ -10,3 +10,11 @@ CREATE TABLE `bandwagon_db`.`tbl_users` (
   `last_name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE);
+
+CREATE TABLE tbl_interests (
+  user_id INT ,
+  event_id INT,
+  PRIMARY KEY (user_id, event_id),
+  CONSTRAINT FK_User FOREIGN KEY (user_id)
+  REFERENCES tbl_users(id)
+); 
