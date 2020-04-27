@@ -8,6 +8,8 @@ CREATE TABLE `bandwagon_db`.`tbl_users` (
   `password` VARCHAR(60) NOT NULL,
   `first_name` VARCHAR(45) NOT NULL,
   `last_name` VARCHAR(45) NOT NULL,
+  `city_of_interest` VARCHAR(45) NOT NULL,
+  `fav_artist` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE);
 
