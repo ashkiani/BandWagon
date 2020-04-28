@@ -4,6 +4,7 @@ function SearchResults(props) {
   return (
     <ul className="list-group">
       {props.results.map(result => (
+
         <li className="list-group-item">
           <div className="card result-card">
             <div className="card-body">
@@ -22,6 +23,7 @@ function SearchResults(props) {
             </div>
           </div>
         </li>
+
 
       ))}
     </ul>

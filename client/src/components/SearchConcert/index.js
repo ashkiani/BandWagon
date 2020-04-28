@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import SearchResults from "../SearchResults";
 
-
 export default function index() {
   const [result, setResult] = useState([]);
   const [search, setSearch] = useState([]);
@@ -18,7 +17,9 @@ export default function index() {
     const upperBound = Math.min(artists.length, 3);
     for (let i = 0; i < upperBound; i++) {
       const response2 = await fetch(`https://api.songkick.com/api/3.0/artists/${artists[i].id}/gigography.json${APIKEY}`);
+
       // Use this link https://api.songkick.com/api/3.0/artists/${artists[i].id}/calendar.json?apikey=${APIKEY}
+
       const data2 = await response2.json();
       const upperBoundEvents = Math.min(data2.resultsPage.results.event.length, 3);
       const events =[];
@@ -33,6 +34,7 @@ export default function index() {
   }
   return (
     <div>
+
       <form>
             <div id="top-section">
                 <div id="search-div" className="container">
@@ -56,8 +58,12 @@ export default function index() {
                 </div>
             </div>
         </form>
+
       <SearchResults results={result} />
     </div>
 
   )
+ 
 }
+
+
