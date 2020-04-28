@@ -1,59 +1,42 @@
-import React, { Component } from "react";
-import SearchForm from "../SearchForm";
+import React, { useState } from 'react'
 import SearchResults from "../SearchResults";
-import API from "../../utils/API";
-import axios from "axios";
 
-class SearchConcert extends Component {
-  state = {
-    search: "",
-    results: []
-  };
+export default function index() {
+  const [result, setResult] = useState([]);
+  const [search, setSearch] = useState([]);
 
-  // When this component mounts, search the songkick API for concerts/festivals
-  componentDidMount() {
-    this.searchConcert("");
+  async function getResults() {
+    const returned = [];
+    let query = "drake";
+    const APIKEY = "?apikey=sAjeH10J9xYvDtmv&query=";
+    const response1 = await fetch(`https://api.songkick.com/api/3.0/search/artists.json${APIKEY}${search}`);
+    console.log(response1);
+    const data = await response1.json();
+    console.log(data);
+    const artists = data.resultsPage.results.artist;
+    const upperBound = Math.min(artists.length, 3);
+    for (let i = 0; i < upperBound; i++) {
+      const response2 = await fetch(`https://api.songkick.com/api/3.0/artists/${artists[i].id}/gigography.json${APIKEY}`);
+      const data2 = await response2.json();
+      const upperBoundEvents = Math.min(data2.resultsPage.results.event.length, 3);
+      const events =[];
+      for (let j=0; j<upperBoundEvents;j++){
+        events.push(data2.resultsPage.results.event[j]);
+      }
+      returned.push({ artistId: artists[i].id, artistName: artists[i].displayName, events });
+    }
+
+    console.log(returned);
+    setResult(returned);
   }
+  return (
+    <div>
+      <p>UNDER CONSTRUCTION</p>
+      <input type="text" placeholder="Search artists" onChange={e => setSearch(e.target.value)}></input>
+      <p></p>
+      <button onClick={getResults}>Find</button>
+      <SearchResults results={result} />
+    </div>
 
-  searchConcert = query => {
-    API.search(query)
-      .then(res => this.setState({ results: res.data.resultsPage.results.event }))
-      .catch(err => console.log(err));
-  };
-
-  handleInputChange = event => {
-    const name = event.target.name;
-    const value = event.target.value;
-    this.setState({
-      [name]: value
-    });
-  };
-
-  // When the form is submitted, search the Giphy API for `this.state.search`
-  handleFormSubmit = event => {
-    event.preventDefault();
-    this.searchConcert(this.state.search);
-  };
-
-  render() {
-    return (
-      <div>
-          <SearchForm
-            search={this.state.search}
-            handleFormSubmit={this.handleFormSubmit}
-            handleInputChange={this.handleInputChange}
-          />
-        <div id="search-results" className="container">
-        
-          <h2 className="text-center">Look at all of the events...</h2>
-          <hr />
-          <SearchResults results={this.state.results} />
-          {/* This is what the search results should look like when results are returned from the api */}
-        </div>
-
-      </div>
-    );
-  }
+  )
 }
-
-export default SearchConcert;
