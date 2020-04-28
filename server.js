@@ -93,6 +93,45 @@ app.get("/checkToken", withAuth, function (req, res) {
   res.sendStatus(200);
 });
 
+app.get("/api/test", async function (req, res) {
+  res.send("Welcome Test");
+  const queryResultTest = await db.executeQuery("SELECT * FROM tbl_users");
+  console.log(queryResultTest);
+  console.log(queryResultTest[0].email);
+});
+
+app.get("/api/profile", async function (req, res) {
+  const email = "fake@email.com";
+  const queryForProfile = await db.executeQuery(
+    `SELECT * FROM tbl_users WHERE email='${email}'`
+  );
+  // const queryForName = await db.executeQuery(
+  //   `SELECT first_name FROM tbl_users WHERE email='${email}'`
+  // );
+  // console.log(req.body);
+  console.log(queryForProfile[0].first_name);
+  const usersName = queryForProfile[0].first_name + queryForProfile[0].last_name;
+  const usersAge = queryForProfile[0].age;
+  const usersCity = queryForProfile[0].city;
+  const usersArtist = queryForProfile[0].favorite_artist;
+
+  const userInfo = `
+  <h5 className="card-header text-center bg-success text-white">Personal Info</h5>
+                <div className="card-body bg-dark text-white">
+                  <h5 className="card-title">${usersName}</h5>
+                  <p className="card-text"><b>Age:</b> ${usersAge}</p>
+                  <p className="card-text"><b>City of Interest:</b> ${usersCity}</p>
+                  <p className="card-text"><b>Favorite Artist:</b> ${usersArtist}</p>  
+                </div>
+  `;  
+
+});
+
+app.post("/profile", async function (req, res) {
+  document.getElementsByClassName("card").push(userInfo);
+
+});
+
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
