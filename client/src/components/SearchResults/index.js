@@ -10,14 +10,6 @@ function SearchResults(props) {
               <h5 className="card-title">Artist/Band: {result.artistName}</h5>
               <hr />
               <div>
-                {/* <p className="card-text"><b>Upcoming Event:</b> Rolling Loud presents \"Rolling Loud VIP SKYLOFT\" 2020</p> */}
-                {/* {result.events.map(event => (
-                  <div>
-                <p className="card-text"><b>Venue:</b> {event.venue.displayName}</p>
-                <p className="card-text"><b>Location:</b> {event.location.city}</p>
-                <p className="card-text"><b>Date:</b> {event.start.date}</p>
-                </div>
-                )} */}
                 {result.events.map(event =>
                   <div>
                     <p className="card-text"><b>Venue:</b> {event.venue.displayName}</p>
