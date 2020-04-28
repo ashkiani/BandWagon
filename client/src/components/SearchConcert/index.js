@@ -9,6 +9,7 @@ export default function index() {
     const returned = [];
     let query = "drake";
     const APIKEY = "?apikey=sAjeH10J9xYvDtmv&query=";
+    const APIKEY2 = "apikey=sAjeH10J9xYvDtmv";
     const response1 = await fetch(`https://api.songkick.com/api/3.0/search/artists.json${APIKEY}${search}`);
     console.log(response1);
     const data = await response1.json();
@@ -19,18 +20,20 @@ export default function index() {
       //const response2 = await fetch(`https://api.songkick.com/api/3.0/artists/${artists[i].id}/gigography.json${APIKEY}`);
       // Use this link https://api.songkick.com/api/3.0/artists/${artists[i].id}/calendar.json?apikey=${APIKEY}
       // link updated.
-      const response2 = await fetch(`https://api.songkick.com/api/3.0/artists/${artists[i].id}/calendar.json?apikey=${APIKEY}`);
-      
-
+      const response2 = await fetch(`https://api.songkick.com/api/3.0/artists/${artists[i].id}/calendar.json?${APIKEY2}`);
       const data2 = await response2.json();
-      const upperBoundEvents = Math.min(data2.resultsPage.results.event.length, 3);
-      const events =[];
-      for (let j=0; j<upperBoundEvents;j++){
-        events.push(data2.resultsPage.results.event[j]);
-      }
-      returned.push({ artistId: artists[i].id, artistName: artists[i].displayName, events });
+      console.log(`https://api.songkick.com/api/3.0/artists/${artists[i].id}/calendar.json?${APIKEY2}`)
+      console.log(data2.resultsPage.results)
+      if(data2.resultsPage.results.event != null)
+      {
+        const upperBoundEvents = Math.min(data2.resultsPage.results.event.length, 3);
+        const events =[];
+        // for (let j=0; j<upperBoundEvents;j++){
+          events.push(data2.resultsPage.results.event[0]);
+        // }
+        returned.push({ artistId: artists[i].id, artistName: artists[i].displayName, events });
+      } 
     }
-
     console.log(returned);
     setResult(returned);
   }

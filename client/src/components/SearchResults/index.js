@@ -13,8 +13,11 @@ function SearchResults(props) {
               <div>
                 {result.events.map(event =>
                   <div>
-                    <p className="card-text"><b>Venue:</b> {event.venue.displayName}</p>
+                    {/* <p className="card-text"><b>Venue:</b> {event.venue.displayName}</p>
                     <p className="card-text"><b>Location:</b> {event.location.city}</p>
+                    <p className="card-text"><b>Date:</b> {event.start.date}</p> */}
+                    <p className="card-text"><b>Venue:</b> {event.displayName}</p>
+                    <p className="card-text"><b>Event Type:</b> {event.type}</p>
                     <p className="card-text"><b>Date:</b> {event.start.date}</p>
                   </div>
                 )}
@@ -23,6 +26,7 @@ function SearchResults(props) {
             </div>
           </div>
         </li>
+
 
 
       ))}
