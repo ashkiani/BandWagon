@@ -16,7 +16,12 @@ export default function index() {
     const artists = data.resultsPage.results.artist;
     const upperBound = Math.min(artists.length, 3);
     for (let i = 0; i < upperBound; i++) {
-      const response2 = await fetch(`https://api.songkick.com/api/3.0/artists/${artists[i].id}/gigography.json${APIKEY}`);
+      //const response2 = await fetch(`https://api.songkick.com/api/3.0/artists/${artists[i].id}/gigography.json${APIKEY}`);
+      // Use this link https://api.songkick.com/api/3.0/artists/${artists[i].id}/calendar.json?apikey=${APIKEY}
+      // link updated.
+      const response2 = await fetch(`https://api.songkick.com/api/3.0/artists/${artists[i].id}/calendar.json?apikey=${APIKEY}`);
+      
+
       const data2 = await response2.json();
       const upperBoundEvents = Math.min(data2.resultsPage.results.event.length, 3);
       const events =[];
@@ -31,12 +36,36 @@ export default function index() {
   }
   return (
     <div>
-      <p>UNDER CONSTRUCTION</p>
-      <input type="text" placeholder="Search artists" onChange={e => setSearch(e.target.value)}></input>
-      <p></p>
-      <button onClick={getResults}>Find</button>
+
+      <form>
+            <div id="top-section">
+                <div id="search-div" className="container">
+                    <h2>Let's find a concert <i className="fas fa-search"></i></h2>
+                    
+                    <div className="input-group mb-3">
+                        <input
+                           onChange={e => setSearch(e.target.value)}
+                            name="search"
+                            type="text"
+                            className="form-control"
+                            placeholder="Artist/Band Name"
+                            id="search"
+                        />
+                        <div className="input-group-append">
+                            {/* Button used to search concerts by artist */}
+                            <button onClick={getResults} className="btn btn-success" type="button" id="btnArtistSearch">Search</button>
+                        </div>
+                    </div>
+                 
+                </div>
+            </div>
+        </form>
+
       <SearchResults results={result} />
     </div>
 
   )
+ 
 }
+
+
