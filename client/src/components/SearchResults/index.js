@@ -15,7 +15,7 @@ function SearchResults(props) {
                 <p className="card-text"><b>Location:</b> Miami, FL, US</p>
                 <p className="card-text"><b>Date:</b> 2020-05-15</p>
                 </div>          */}
-                <a href="#" className="btn btn-success">Interested</a>&nbsp;<a href={result.uri} target="_blank" className="btn btn-success">View Details</a>
+                <a href="#" className="btn btn-success" data-id={result.id}>Interested</a>&nbsp;<a href={result.uri} target="_blank" className="btn btn-success">View Details</a>
               </div>
             </div>
         </li>

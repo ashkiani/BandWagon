@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import SearchForm from "../SearchForm";
 import SearchResults from "../SearchResults";
 import API from "../../utils/API";
+import axios from "axios";
 
 class SearchConcert extends Component {
   state = {
@@ -16,7 +17,7 @@ class SearchConcert extends Component {
 
   searchConcert = query => {
     API.search(query)
-      .then(res => this.setState({ results: res.data.resultsPage.results.artist }))
+      .then(res => this.setState({ results: res.data.resultsPage.results.event }))
       .catch(err => console.log(err));
   };
 
