@@ -26,9 +26,6 @@ function SearchResults(props) {
             </div>
           </div>
         </li>
-
-
-
       ))}
     </ul>
   );
