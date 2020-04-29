@@ -32,7 +32,14 @@ app.get("/api/secret", withAuth, function (req, res) {
 });
 
 app.post("/api/register", async function (req, res) {
-  const { email, password, firstName, lastName } = req.body;
+  const {
+    email,
+    password,
+    firstName,
+    lastName,
+    favArtist,
+    cityOfInterest,
+  } = req.body;
   const hashedPassword = await bcrypt.hash(password, 10);
   const queryResult = await db.executeQuery(
     `SELECT * FROM tbl_users WHERE email='${email}'`
@@ -43,7 +50,7 @@ app.post("/api/register", async function (req, res) {
     res.status(400).send("The provided Email already exists.");
   } else {
     let newUser = await db.executeQuery(
-      `INSERT INTO tbl_users SET email= '${email}' , password= '${hashedPassword}' , first_name='${firstName}' , last_name='${lastName}'`
+      `INSERT INTO tbl_users SET email= '${email}' , password= '${hashedPassword}' , first_name='${firstName}' , last_name='${lastName}', fav_artist='${favArtist}', city_of_interest='${cityOfInterest}'`
     );
     if (newUser.affectedRows > 0) {
       res.status(200).send("Welcome to the club!");
