@@ -31,7 +31,7 @@ export default function index() {
         // for (let j=0; j<upperBoundEvents;j++){
           events.push(data2.resultsPage.results.event[0]);
         // }
-        returned.push({ artistId: artists[i].id, artistName: artists[i].displayName, events });
+        returned.push({ artistId: artists[i].id, artistName: artists[i].displayName, artistUrl: artists[i].uri, events });
       } 
     }
     console.log(returned);

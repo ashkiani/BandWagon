@@ -22,7 +22,7 @@ function SearchResults(props) {
                   </div>
                 )}
               </div>
-              <a href="#" className="btn btn-success" data-id={result.id}>Interested</a>&nbsp;<a href={result.uri} target="_blank" className="btn btn-success">View Details</a>
+              <a href="#" className="btn btn-success" data-id={result.id}>Interested</a>&nbsp;<a href={result.artistUrl} target="_blank" className="btn btn-success">View Details</a>
             </div>
           </div>
         </li>
