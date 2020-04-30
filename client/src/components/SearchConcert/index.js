@@ -7,26 +7,22 @@ export default function index() {
 
   async function getResults() {
     const returned = [];
-    let query = "drake";
-    const APIKEY = "?apikey=sAjeH10J9xYvDtmv&query=";
-    const APIKEY2 = "apikey=sAjeH10J9xYvDtmv";
-    const response1 = await fetch(`https://api.songkick.com/api/3.0/search/artists.json${APIKEY}${search}`);
+    const apiRes = await fetch("/api/api_key");
+    const {API_KEY} = await apiRes.json();
+    const response1 = await fetch(`https://api.songkick.com/api/3.0/search/artists.json?apikey=${API_KEY}&query=${search}`);
     console.log(response1);
     const data = await response1.json();
     console.log(data);
     const artists = data.resultsPage.results.artist;
     const upperBound = Math.min(artists.length, 3);
     for (let i = 0; i < upperBound; i++) {
-      //const response2 = await fetch(`https://api.songkick.com/api/3.0/artists/${artists[i].id}/gigography.json${APIKEY}`);
-      // Use this link https://api.songkick.com/api/3.0/artists/${artists[i].id}/calendar.json?apikey=${APIKEY}
-      // link updated.
-      const response2 = await fetch(`https://api.songkick.com/api/3.0/artists/${artists[i].id}/calendar.json?${APIKEY2}`);
+      const response2 = await fetch(`https://api.songkick.com/api/3.0/artists/${artists[i].id}/calendar.json?apikey=${API_KEY}`);
       const data2 = await response2.json();
-      console.log(`https://api.songkick.com/api/3.0/artists/${artists[i].id}/calendar.json?${APIKEY2}`)
+      console.log(`https://api.songkick.com/api/3.0/artists/${artists[i].id}/calendar.json?apikey=${API_KEY}`)
       console.log(data2.resultsPage.results)
       if(data2.resultsPage.results.event != null)
       {
-        const upperBoundEvents = Math.min(data2.resultsPage.results.event.length, 3);
+        // const upperBoundEvents = Math.min(data2.resultsPage.results.event.length, 3);
         const events =[];
         // for (let j=0; j<upperBoundEvents;j++){
           events.push(data2.resultsPage.results.event[0]);
