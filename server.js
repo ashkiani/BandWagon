@@ -107,9 +107,10 @@ app.get("/checkToken", withAuth, function (req, res) {
   res.sendStatus(200);
 });
 
-app.post("/api/interested", async function (req, res) {
+app.post("/api/interested", withAuth, async function (req, res) {
   try {
-    const { email, eventId } = req.body;
+    const { eventId } = req.body;
+    const email = req.email;
     console.log("email");
     console.log(email);
     console.log("event");
@@ -127,7 +128,7 @@ app.post("/api/interested", async function (req, res) {
       const recordExists = queryResult.length > 0;
       if (recordExists) {
         console.log("interest exists");
-        res.status(400).send("The user is already interested in this event.");
+        res.status(400).send("The user has already marked this event.");
       } else {
         console.log("interest not exist");
         queryResult = await db.executeQuery(
