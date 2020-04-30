@@ -7,7 +7,9 @@ export default class Login extends Component {
       email: "",
       password: "",
       firstName: "",
-      lastName: ""
+      lastName: "",
+      favArtist: "",
+      cityOfInterest: ""
     };
   }
   handleInputChange = (event) => {
@@ -81,6 +83,20 @@ export default class Login extends Component {
                         <div className="form-group">
                           <label >Last Name:</label>
                           <input type="text" name="lastName" placeholder="Enter Last Name" value={this.state.lastName} onChange={this.handleInputChange} required className="form-control" />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col">
+                        <div className="form-group">
+                          <label >Favorite Artist/Band:</label>
+                          <input type="text" name="favArtist" placeholder="Favorite Artist/Band" value={this.state.favArtist} onChange={this.handleInputChange} required className="form-control" />
+                        </div>
+                      </div>
+                      <div className="col">
+                        <div className="form-group">
+                          <label >City of Interest:</label>
+                          <input type="text" name="cityOfInterest" placeholder="City of Interest" value={this.state.cityOfInterest} onChange={this.handleInputChange} required className="form-control" />
                         </div>
                       </div>
                     </div>

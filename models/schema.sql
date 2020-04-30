@@ -13,7 +13,7 @@ CREATE TABLE `bandwagon_db`.`tbl_users` (
   PRIMARY KEY (`id`),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE);
 
-CREATE TABLE tbl_interests (
+CREATE TABLE `bandwagon_db`.`tbl_interests` (
   user_id INT ,
   event_id INT,
   PRIMARY KEY (user_id, event_id),
