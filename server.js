@@ -149,7 +149,8 @@ try {
   if (process.env.JAWSDB_URL) {
     db.connectRemote(process.env.JAWSDB_URL);
   } else {
-    let credential = require("./config/localConnection");
+    let credential = JSON.parse(process.env.LOCAL_DB);
+    console.log(credential);
     db.connectLocal(
       credential.host,
       credential.port,
@@ -160,6 +161,7 @@ try {
   db.connection.connect(function (err) {
     if (err) {
       console.error("Failed to connect to DB."); //+ err.stack
+      console.log(err);
       return;
     }
     console.log("Connected to DB as id " + db.connection.threadId);
