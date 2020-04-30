@@ -141,6 +141,18 @@ app.post("/api/interested", async function (req, res) {
   }
 });
 
+app.get("/api/api_key", withAuth, async function (req, res) {
+  try {
+    console.log("sending API_KEY");
+    res.status(200).json({
+      API_KEY: process.env.API_KEY,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
+});
+
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
