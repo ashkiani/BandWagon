@@ -32,37 +32,44 @@ app.get("/api/secret", withAuth, function (req, res) {
 });
 
 app.post("/api/register", async function (req, res) {
-  const {
-    email,
-    password,
-    firstName,
-    lastName,
-    favArtist,
-    cityOfInterest,
-  } = req.body;
-  const hashedPassword = await bcrypt.hash(password, 10);
-  const queryResult = await db.executeQuery(
-    `SELECT * FROM tbl_users WHERE email='${email}'`
-  );
-  let userExists = queryResult.length > 0;
-  console.log("User already exists");
-  if (userExists) {
-    res.status(400).send("The provided Email already exists.");
-  } else {
-    let newUser = await db.executeQuery(
-      `INSERT INTO tbl_users SET email= '${email}' , password= '${hashedPassword}' , first_name='${firstName}' , last_name='${lastName}', fav_artist='${favArtist}', city_of_interest='${cityOfInterest}'`
+  try {
+    const {
+      email,
+      password,
+      firstName,
+      lastName,
+      favArtist,
+      cityOfInterest,
+    } = req.body;
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const queryResult = await db.executeQuery(
+      `SELECT * FROM tbl_users WHERE email='${email}'`
     );
-    if (newUser.affectedRows > 0) {
-      res.status(200).send("Welcome to the club!");
+    let userExists = queryResult.length > 0;
+    console.log("User already exists");
+    if (userExists) {
+      res.status(400).send("The provided Email already exists.");
     } else {
-      res.status(500).send("Error registering new user please try again.");
+      let newUser = await db.executeQuery(
+        `INSERT INTO tbl_users SET email= '${email}' , password= '${hashedPassword}' , first_name='${firstName}' , last_name='${lastName}', fav_artist='${favArtist}', city_of_interest='${cityOfInterest}'`
+      );
+      if (newUser.affectedRows > 0) {
+        res.status(200).send("Welcome to the club!");
+      } else {
+        res.status(500).send("Error registering new user please try again.");
+      }
     }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      error: "Internal error please try again",
+    });
   }
 });
 
 app.post("/api/authenticate", async function (req, res) {
-  const { email, password } = req.body;
   try {
+    const { email, password } = req.body;
     let result = await db.executeQuery(
       `SELECT * FROM tbl_users WHERE email='${email}'`
     );
