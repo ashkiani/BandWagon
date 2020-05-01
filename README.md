@@ -12,9 +12,9 @@ This initial version of the project will allow you to search for concerts by art
 * Users can sign up.
 * Users can login.
 * Users can search for concerts by entering artist names.
+* User can save events/concerts (via the "Interested" button)
 
 ## Future Features
-* Saving events (Interest button)
 * View/Edit User's Profile page
 
 
@@ -51,7 +51,7 @@ Please email us for further questions at ashkiani@yahoo.com, eedwards@su.edu, {H
 ## Contribution Guidlines 
 ​
 Direct link to site: 
-https://bandwagon-v1.herokuapp.com/
+https://bandwagon-v2.herokuapp.com/
 ​
 ### License
 ​
