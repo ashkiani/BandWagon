@@ -149,6 +149,20 @@ app.post("/api/interested", withAuth, async function (req, res) {
   }
 });
 
+app.get("/api/profile", async function (req, res) {
+  const email = "test2@mail.com";
+  // const { email, password } = req.body;
+  // console.log(req.body);
+  const queryForProfile = await db.executeQuery(
+    `SELECT * FROM tbl_users WHERE email='${email}'`
+  );
+  const usersName = queryForProfile[0].first_name + " " + queryForProfile[0].last_name;
+  const usersCity = queryForProfile[0].city_of_interest;
+  const usersArtist = queryForProfile[0].fav_artist;
+  const usersEmail = queryForProfile[0].email;
+  res.json({name: usersName, artist: usersArtist, city: usersCity, email: usersEmail});
+});
+
 app.get("/api/api_key", withAuth, async function (req, res) {
   try {
     console.log("sending API_KEY");
