@@ -33,7 +33,7 @@
     "cross-env": "^7.0.2",
     "express": "^4.16.3",
     "if-env": "^1.0.4",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "mysql": "^2.18.1",
     "mysql-sync-query": "^1.0.4",
     "concurrently": "^4.1.0",
